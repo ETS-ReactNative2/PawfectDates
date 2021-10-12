@@ -1,30 +1,42 @@
 import { useNavigation } from '@react-navigation/native'
-import React from 'react'
+import * as React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { auth } from '../firebase'
 
 const HomeScreen = () => {
-
-    const navigation = useNavigation()
-    const handleSignOut = () => {
-        auth
-        .signOut()
-        .then(() => {
-            navigation.replace("Login")
-        })
-        .catch(error => alert(error.message))
-    }
-
     return (
-        <View style={styles.container}>
-            <Text>Email: {auth.currentUser?.email}</Text>
-            <TouchableOpacity
-            style={styles.button}
-            onPress={handleSignOut}>
-                <Text style={styles.buttonText}>Sign Out</Text>
-            </TouchableOpacity>
-        </View>
+        <View>
+        <Text>Home</Text>
+    </View>
     )
+    
+
+    // const navigation = useNavigation()
+    // const handleSignOut = () => {
+    //     auth
+    //     .signOut()
+    //     .then(() => {
+    //         navigation.replace("Login")
+    //     })
+    //     .catch(error => alert(error.message))
+    // }
+
+    // return (
+    //     <View style={styles.container}>
+    //         <Text>Email: {auth.currentUser?.email}</Text>
+    //         <TouchableOpacity
+    //         style={styles.button}
+    //         onPress={handleSignOut}>
+    //             <Text style={styles.buttonText}>Sign Out</Text>
+    //         </TouchableOpacity>
+    //         <TouchableOpacity
+    //         style={styles.button}
+    //         onPress={() => navigation.navigate("Messages")}>
+    //             <Text style={styles.buttonText}>Messages</Text>
+    //         </TouchableOpacity>
+    //         <NavTabs></NavTabs>
+    //     </View>
+    // )
 }
 
 export default HomeScreen

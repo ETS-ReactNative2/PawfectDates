@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableOpacityBase, View } from 'react-native';
+import * as React from 'react'
+import { useEffect, useState } from 'react'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { auth } from '../firebase';
 
 const LoginScreen = () => {
@@ -25,7 +26,9 @@ const LoginScreen = () => {
             console.log(`Registered with ${user.email}`)
         })
         .catch(error => alert(error.message))
+        .finally(navigation.navigate("Register"))
     }
+
 
     const handleLogIn = () => {
         auth
