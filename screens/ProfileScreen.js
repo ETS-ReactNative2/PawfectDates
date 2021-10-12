@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from 'react-native';
 
-const MessagesScreen = () => {
+const ProfileScreen = () => {
     return ( 
         <View style={styles.container}>
-            <Text>Dispaly messages here.</Text>
+            <Text>User Profile Screen</Text>
         </View>
      );
 }
  
-export default MessagesScreen;
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
     container: {

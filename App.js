@@ -7,16 +7,18 @@ import LoginScreen from './screens/LoginScreen';
 import HomeScreen from "./screens/HomeScreen";
 import RegisterScreen from './screens/RegisterScreen';
 import MessagesScreen from "./screens/MessagesScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-function NavTabs() {
+const NavTabs = () => {
   return (
-    <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+        <Tab.Screen name="Swipe" component={HomeScreen} />
         <Tab.Screen name="Messages" component={MessagesScreen} />
+        <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
   )
 }
@@ -24,8 +26,8 @@ function NavTabs() {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-      <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Home" component={NavTabs} />
       </Stack.Navigator>
     </NavigationContainer>
