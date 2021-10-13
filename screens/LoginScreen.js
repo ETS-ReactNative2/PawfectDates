@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { auth } from '../firebase';
 
+
 const LoginScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -69,7 +70,7 @@ const LoginScreen = () => {
                   <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
               <TouchableOpacity
-              onPress={handleSignUp}
+              onPress={() => navigation.replace("Register")}
               style={[styles.button, styles.buttonOutline]}
               >
                 <Text style={styles.buttonOutlineText}>Register</Text>
