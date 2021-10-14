@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useState } from 'react/cjs/react.development';
 import { auth, db } from '../firebase';
 
-console.log(auth.currentUser)
 const ProfileScreen = () => {
+    const [userDetails, setUserDetails] = useState("");
+    db.collection("users").doc(auth.currentUser.uid).get()
+    .then(snapshot => setUserDetails(snapshot.data()));
 
-    const currentUser = auth.currentUser.uid;
-    const userAbout = db.collection("users").doc(currentUser).about;
     return ( 
         <View style={styles.container}>
-            <Text>{userAbout} Profile Screen</Text>
+            <Text>{userDetails.about} Profile Screen</Text>
         </View>
      );
 }
