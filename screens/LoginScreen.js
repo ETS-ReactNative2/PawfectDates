@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react'
 import { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from 'react-native';
 import { auth } from '../firebase';
 
 
@@ -12,23 +12,13 @@ const LoginScreen = () => {
     const navigation = useNavigation()
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
+            console.log(user)
             if (user) {
                 navigation.replace("Home")
-            }
+            } 
         })
         return unsubscribe
     }, [])
-
-    const handleSignUp = () => {
-        auth
-        .createUserWithEmailAndPassword(email, password)
-        .then(userCredential => {
-            const user = userCredential.user;
-            console.log(`Registered with ${user.email}`)
-        })
-        .catch(error => alert(error.message))
-        .finally(navigation.navigate("Register"))
-    }
 
 
     const handleLogIn = () => {
@@ -69,12 +59,10 @@ const LoginScreen = () => {
               >
                   <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-              onPress={() => navigation.replace("Register")}
-              style={[styles.button, styles.buttonOutline]}
-              >
-                <Text style={styles.buttonOutlineText}>Register</Text>
-              </TouchableOpacity>
+              <Button
+              title="Don't Have An Account? Sign Up!"
+              onPress={() => navigation.navigate("Register")}
+              />
           </View>
         </KeyboardAvoidingView>
     )

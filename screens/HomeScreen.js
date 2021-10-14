@@ -25,24 +25,6 @@ const HomeScreen = () => {
             </TouchableOpacity>
     </View>
     )
-    
-
-    // return (
-    //     <View style={styles.container}>
-    //         <Text>Email: {auth.currentUser?.email}</Text>
-    //         <TouchableOpacity
-    //         style={styles.button}
-    //         onPress={handleSignOut}>
-    //             <Text style={styles.buttonText}>Sign Out</Text>
-    //         </TouchableOpacity>
-    //         <TouchableOpacity
-    //         style={styles.button}
-    //         onPress={() => navigation.navigate("Messages")}>
-    //             <Text style={styles.buttonText}>Messages</Text>
-    //         </TouchableOpacity>
-    //         <NavTabs></NavTabs>
-    //     </View>
-    // )
 }
 
 export default HomeScreen
