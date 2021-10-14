@@ -1,10 +1,15 @@
 import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { auth, db } from '../firebase';
 
+console.log(auth.currentUser)
 const ProfileScreen = () => {
+
+    const currentUser = auth.currentUser.uid;
+    const userAbout = db.collection("users").doc(currentUser).about;
     return ( 
         <View style={styles.container}>
-            <Text>User Profile Screen</Text>
+            <Text>{userAbout} Profile Screen</Text>
         </View>
      );
 }

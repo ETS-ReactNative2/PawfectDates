@@ -1,23 +1,22 @@
 import * as React from "react";
-import { KeyboardAvoidingView, Text, TextInput, View, StyleSheet, TouchableOpacity, Button } from "react-native";
+import { KeyboardAvoidingView, Text, TextInput, View, StyleSheet, TouchableOpacity } from "react-native";
 import {auth, db} from '../firebase'
 import { useState } from "react";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
-import { collection, addDoc } from "firebase/firestore";
 
-const RegisterScreen = ({navigation}) => {
-    // const navigation = useNavigation();
+const RegisterScreen = () => {
 
     // create new user
-    const handleSignUp = () => {
-      auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(userCredential => {
-        
-      })
-      .catch(error => alert(error.message))
-  }
+//     const handleSignUp = () => {
+//       auth
+//       .createUserWithEmailAndPassword(email, password)
+//       .then(userCredential => {
+//         db.collection("users").doc(userCredential.user.uid).set({
+//             email: userCredential.user.email
+//         })
+//       })
+//       .catch(error => alert(error.message))
+//   }
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -49,7 +48,13 @@ const RegisterScreen = ({navigation}) => {
                 likes: "",
                 dislikes: ""
                 }}
-            onSubmit={ async (values) => await db.collection("users").add(values)}>
+            onSubmit={ (values) => {
+                auth
+                .createUserWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                db.collection("users").doc(userCredential.user.uid).set(values)
+                })
+            }}>
             {({ handleChange, handleBlur, handleSubmit, values }) => (
             <View style={styles.inputContainer}>
             <TextInput
@@ -94,7 +99,7 @@ const RegisterScreen = ({navigation}) => {
                 value={values.dislikes}
                 style={styles.input}
             />
-            <TouchableOpacity style={styles.button} onPress={handleSubmit} onPressIn={handleSignUp} title="Submit">
+            <TouchableOpacity style={styles.button} onPress={handleSubmit} title="Submit">
                 <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
             </View>

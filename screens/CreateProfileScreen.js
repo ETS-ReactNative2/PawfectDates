@@ -1,12 +1,11 @@
 import * as React from "react";
 import { KeyboardAvoidingView, Text, TextInput, View, StyleSheet, TouchableOpacity, Button } from "react-native";
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 import { Formik } from "formik";
 import { collection, addDoc } from "firebase/firestore";
 
 
-const CreateProfileScreen = ({navigation, route}) => {
-    const {uid} = route.params;  
+const CreateProfileScreen = () => {
     return (
       <View style={styles.container}>
       <Formik
@@ -18,7 +17,7 @@ const CreateProfileScreen = ({navigation, route}) => {
       likes: "",
       dislikes: ""
        }}
-  onSubmit={ async (values) => await db.collection("users").doc(uid).set(values)}>
+  onSubmit={ async (values) => await db.collection("users").doc(auth.currentUser.uid).set(values)}>
   {({ handleChange, handleBlur, handleSubmit, values }) => (
   <View style={styles.inputContainer}>
    <TextInput
