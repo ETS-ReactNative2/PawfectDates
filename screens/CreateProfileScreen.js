@@ -2,12 +2,14 @@ import * as React from "react";
 import { KeyboardAvoidingView, Text, TextInput, View, StyleSheet, TouchableOpacity, Button } from "react-native";
 import { db, auth } from "../firebase";
 import { Formik } from "formik";
-import { collection, addDoc } from "firebase/firestore";
+// import { collection, addDoc } from "firebase/firestore";
 
 
 const CreateProfileScreen = () => {
+
+
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
       <Formik
   initialValues={{ 
       dogName: "",
@@ -68,7 +70,7 @@ const CreateProfileScreen = () => {
   </View>
   )}
   </Formik>
-  </View> 
+  </KeyboardAvoidingView> 
      );
   }
    
@@ -78,6 +80,7 @@ export default CreateProfileScreen;
 const styles = StyleSheet.create({
   container: {
       flex: 1,
+      flexDirection: 'column',
       justifyContent: "center",
       alignItems: "center",
   },

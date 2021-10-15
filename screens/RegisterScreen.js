@@ -3,22 +3,34 @@ import { KeyboardAvoidingView, Text, TextInput, View, StyleSheet, TouchableOpaci
 import {auth, db} from '../firebase'
 import { useState } from "react";
 import { Formik } from "formik";
+import * as ImagePicker from "expo-image-picker";
 
 const RegisterScreen = () => {
-
-    // create new user
-//     const handleSignUp = () => {
-//       auth
-//       .createUserWithEmailAndPassword(email, password)
-//       .then(userCredential => {
-//         db.collection("users").doc(userCredential.user.uid).set({
-//             email: userCredential.user.email
-//         })
-//       })
-//       .catch(error => alert(error.message))
-//   }
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [image, setImage] = useState(null);
+
+    let openImagePickerAsync = async () => {
+        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    
+        if (permissionResult.granted === false) {
+          alert("Permission to access camera roll is required!");
+          return;
+        }
+    
+        let pickerResult = await ImagePicker.launchImageLibraryAsync();
+        
+        if (pickerResult.cancelled === true) {
+            return;
+          }
+      
+          setImage({ localUri: pickerResult.uri });
+        };
+      
+        if (image !== null) {
+          console.log("img selected")
+        }
+      
 
     return (
       <KeyboardAvoidingView
@@ -99,6 +111,7 @@ const RegisterScreen = () => {
                 value={values.dislikes}
                 style={styles.input}
             />
+            <TouchableOpacity style={styles.buttonOutline} onPress={openImagePickerAsync}><Text style={styles.buttonOutlineText}>Add Picture</Text></TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={handleSubmit} title="Submit">
                 <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
@@ -145,8 +158,12 @@ const styles = StyleSheet.create({
     },
     buttonOutline: {
         backgroundColor: "white",
-        marginTop: 5,
+        width: "100%",
+        padding: 15,
+        borderRadius: 10,
+        alignItems: "center",
         borderColor: "salmon",
+        margin: 5,
         borderWidth: 2,
     },
     buttonText: {

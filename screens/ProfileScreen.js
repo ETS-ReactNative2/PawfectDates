@@ -10,7 +10,8 @@ const ProfileScreen = () => {
 
     return ( 
         <View style={styles.container}>
-            <Text>{userDetails.about} Profile Screen</Text>
+            <Text>About {userDetails.dogName}:</Text>
+            <Text>{userDetails.about}</Text>
         </View>
      );
 }
