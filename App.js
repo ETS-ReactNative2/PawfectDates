@@ -8,7 +8,6 @@ import HomeScreen from "./screens/HomeScreen";
 import MessagesScreen from "./screens/MessagesScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import RegisterScreen from './screens/RegisterScreen';
-import CreateProfileScreen from "./screens/CreateProfileScreen";
 
 
 const Tab = createBottomTabNavigator();
@@ -31,7 +30,6 @@ export default function App() {
       <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
       <Stack.Screen options={{ headerShown: false }} name="Home" component={NavTabs} />
       <Stack.Screen options={{ headerTitle: "", headerTransparent: true }} name="Register" component={RegisterScreen} />
-      <Stack.Screen options={{ headerShown: false }} name="CreateProfile" component={CreateProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
 

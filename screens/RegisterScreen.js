@@ -1,14 +1,17 @@
 import * as React from "react";
-import { KeyboardAvoidingView, Text, TextInput, View, StyleSheet, TouchableOpacity } from "react-native";
-import {auth, db} from '../firebase'
+import { KeyboardAvoidingView, Text, TextInput, View, StyleSheet, TouchableOpacity, Button } from "react-native";
+import {auth, db, storage} from '../firebase'
 import { useState } from "react";
 import { Formik } from "formik";
+import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
+
 
 const RegisterScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [image, setImage] = useState(null);
+    const navigation = useNavigation();
 
     let openImagePickerAsync = async () => {
         let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -19,21 +22,24 @@ const RegisterScreen = () => {
         }
     
         let pickerResult = await ImagePicker.launchImageLibraryAsync();
-        
         if (pickerResult.cancelled === true) {
             return;
           }
-      
           setImage({ localUri: pickerResult.uri });
         };
-      
-        if (image !== null) {
-          console.log("img selected")
+
+        const uploadImage = async (uri, imgName) => {
+            const res = await fetch(uri);
+            const blob = await res.blob();
+
+            const ref = storage.ref().child(imgName);
+            return ref.put(blob);
         }
+        
       
 
     return (
-      <KeyboardAvoidingView
+      <View
         style={styles.container}
         behavior="padding"
         >
@@ -58,13 +64,16 @@ const RegisterScreen = () => {
                 city: "",
                 about: "",
                 likes: "",
-                dislikes: ""
+                dislikes: "",
                 }}
             onSubmit={ (values) => {
                 auth
                 .createUserWithEmailAndPassword(email, password)
                 .then(userCredential => {
-                db.collection("users").doc(userCredential.user.uid).set(values)
+                  db.collection("users").doc(userCredential.user.uid).set(values);
+                  if (image !== null) {
+                        uploadImage(image.localUri, userCredential.user.uid);
+                    }
                 })
             }}>
             {({ handleChange, handleBlur, handleSubmit, values }) => (
@@ -119,7 +128,7 @@ const RegisterScreen = () => {
             )}
   </Formik>
           </View>
-        </KeyboardAvoidingView>
+        </View>
      );
 }
  
