@@ -32,12 +32,11 @@ const ProfileScreen = () => {
 
     return ( 
         <View style={styles.container}>
-        <Text>Profile Page</Text>
-        {/* <Card
+        <Card
         key={userDetails.dogName}
         name={userDetails.dogName}
         bio={userDetails.about}
-        image={"https://www.pngitem.com/pimgs/m/522-5220445_anonymous-profile-grey-person-sticker-glitch-empty-profile.png"}/>  */}
+        image={userDetails.pic}/> 
         </View>
      );
 }

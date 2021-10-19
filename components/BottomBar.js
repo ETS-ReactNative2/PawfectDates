@@ -2,14 +2,14 @@ import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 
-export default function BottomBar({ handleLikePress, handlePassPress }) {
+export default function BottomBar({handleLike, handlePass}) {
   return (
     <View style={styles.container}>
       <View />
-      <TouchableOpacity style={styles.button} onPress={handlePassPress}>
+      <TouchableOpacity style={styles.button} onPress={handlePass}>
       <AntDesign name="closecircle" size={50} color="salmon" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleLikePress}>
+      <TouchableOpacity style={styles.button} onPress={handleLike}>
       <AntDesign name="checkcircle" size={50} color="#94EB94" />
       </TouchableOpacity>
       <View />

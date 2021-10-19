@@ -1,16 +1,13 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import {Text, ImageBackground, View, StyleSheet, Image, Button} from 'react-native';
 import { db } from '../firebase';
 import BottomBar from './BottomBar';
 
-// const users = db.collection("users").get().then((querySnapshot) => {
-//     querySnapshot.forEach((doc) => {
-//         console.log(doc.id, "=>", doc.data())
-//     })
-// })
-// console.log(users)
 
-const Card = props => {  
+const Card = (props) => {  
+
+  
   return (
     <View style={styles.card}>
       <ImageBackground source={{uri: props.image}} style={styles.image}>
@@ -18,7 +15,7 @@ const Card = props => {
           <Text style={styles.name}>{props.name}</Text>
           <Text style={styles.bio}>{props.bio}</Text>
         </View>
-        <BottomBar/>
+        <BottomBar handleLike={props.handleLike} handlePass={props.handlePass}/>
       </ImageBackground>
     </View>
   );
