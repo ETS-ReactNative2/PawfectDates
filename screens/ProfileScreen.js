@@ -9,26 +9,10 @@ import { auth, db, storage } from '../firebase';
 const ProfileScreen = () => {
 
     const [userDetails, setUserDetails] = useState("");
-    const [key, setKey] = useState("");
     db.collection("users").doc(auth.currentUser.uid).get()
     .then(snapshot => {
         setUserDetails(snapshot.data());
-        setKey(snapshot.id);
     });
-
-
-    const [profilePic, setProfilePic] = useState();
-
-    // useEffect(() => {
-    //     storage
-    //       .ref('/' + auth.currentUser.uid) //name in storage in firebase console
-    //       .getDownloadURL()
-    //       .then((url) => {
-    //             setProfilePic(url);
-    //           }
-    //       )
-    //       .catch((e) => console.log('Errors while downloading => ', e));
-    //   }, []);
 
     return ( 
         <View style={styles.container}>

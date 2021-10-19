@@ -25,7 +25,6 @@ const LoginScreen = () => {
         .signInWithEmailAndPassword(email, password)
         .then(userCredential => {
             const user = userCredential.user;
-            console.log(`Logged in with ${user.email}`)
         })
         .catch(error => alert(error.message))
     }

@@ -1,9 +1,8 @@
 import * as React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, ImageBackground } from 'react-native'
-import { auth, db, storage } from '../firebase';
+import { StyleSheet, View } from 'react-native'
+import { db } from '../firebase';
 import Card from '../components/Card';
 import { useEffect, useState } from 'react/cjs/react.development';
-import BottomBar from '../components/BottomBar';
 
 
 const HomeScreen = () => {
@@ -19,16 +18,13 @@ const HomeScreen = () => {
           // handle likes and passes
           const [currentIndex, setCurrentIndex] = useState(0);
           const handleLike = () => {
-              console.log("like")
                nextUser()
           }
           const handlePass = () => {
-              console.log("pass")
                nextUser()
           }
     
         const nextUser = () => {
-          console.log("Did it work?")
           const nextIndex = users.length - 2 === currentIndex ? 0 : currentIndex + 1
           setCurrentIndex(nextIndex)
        }

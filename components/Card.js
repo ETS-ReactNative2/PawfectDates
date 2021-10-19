@@ -1,7 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import {Text, ImageBackground, View, StyleSheet, Image, Button} from 'react-native';
-import { db } from '../firebase';
+import {Text, ImageBackground, View, StyleSheet} from 'react-native';
 import BottomBar from './BottomBar';
 
 
