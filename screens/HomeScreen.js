@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { db } from '../firebase';
+import { auth, db } from '../firebase';
 import Card from '../components/Card';
 import { useEffect, useState } from 'react/cjs/react.development';
 
+let likes = new Array()
 
 const HomeScreen = () => {
 
@@ -17,8 +18,13 @@ const HomeScreen = () => {
 
           // handle likes and passes
           const [currentIndex, setCurrentIndex] = useState(0);
+
           const handleLike = () => {
-               nextUser()
+            likes.push(users[currentIndex].uid)
+            db.collection("users").doc(auth.currentUser.uid).update({
+                "likes": likes
+            })
+              nextUser()
           }
           const handlePass = () => {
                nextUser()
