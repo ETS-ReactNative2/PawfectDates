@@ -1,9 +1,9 @@
 import * as React from "react";
-import { KeyboardAvoidingView, Text, TextInput, View, StyleSheet, TouchableOpacity, Button } from "react-native";
+import { Text, TextInput, View, StyleSheet, TouchableOpacity } from "react-native";
 import {auth, db, storage} from '../firebase'
 import { useState } from "react";
 import { Formik } from "formik";
-import { useNavigation } from "@react-navigation/native";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as ImagePicker from "expo-image-picker";
 
 
@@ -11,7 +11,6 @@ const RegisterScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [image, setImage] = useState(null);
-    const navigation = useNavigation();
 
     let openImagePickerAsync = async () => {
         let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -31,17 +30,24 @@ const RegisterScreen = () => {
         const uploadImage = async (uri, imgName) => {
             const res = await fetch(uri);
             const blob = await res.blob();
-
             const ref = storage.ref().child(imgName);
-            return ref.put(blob);
+            return ref.put(blob).then(snapshot => {
+                snapshot.ref.getDownloadURL().then(url => {
+                    db.collection("users").doc(imgName).set({
+                        "uid": imgName,
+                        "pic": url
+                    }, {merge: true})
+                })
+            });
         }
         
       
 
     return (
-      <View
-        style={styles.container}
-        behavior="padding"
+        <KeyboardAwareScrollView
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle={styles.container}
+        scrollEnabled={true}
         >
           <View style={styles.inputContainer}>
               <TextInput
@@ -63,21 +69,18 @@ const RegisterScreen = () => {
                 personName: "",
                 city: "",
                 about: "",
-                likes: "",
-                dislikes: "",
                 }}
             onSubmit={ (values) => {
                 auth
                 .createUserWithEmailAndPassword(email, password)
                 .then(userCredential => {
-                  db.collection("users").doc(userCredential.user.uid).set(values);
+                   db.collection("users").doc(userCredential.user.uid).set(values);
                   if (image !== null) {
-                        uploadImage(image.localUri, userCredential.user.uid);
-                    }
-                })
+                        uploadImage(image.localUri, userCredential.user.uid)
+                    }})
             }}>
             {({ handleChange, handleBlur, handleSubmit, values }) => (
-            <View style={styles.inputContainer}>
+            <View>
             <TextInput
                 placeholder="My Name"
                 onChangeText={handleChange('dogName')}
@@ -106,20 +109,6 @@ const RegisterScreen = () => {
                 value={values.about}
                 style={styles.input}
             />
-            <TextInput
-                placeholder="Things I Like"
-                onChangeText={handleChange('likes')}
-                onBlur={handleBlur('likes')}
-                value={values.likes}
-                style={styles.input}
-            />
-            <TextInput
-                placeholder="Things I Don't Like"
-                onChangeText={handleChange('dislikes')}
-                onBlur={handleBlur('dislikes')}
-                value={values.dislikes}
-                style={styles.input}
-            />
             <TouchableOpacity style={styles.buttonOutline} onPress={openImagePickerAsync}><Text style={styles.buttonOutlineText}>Add Picture</Text></TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={handleSubmit} title="Submit">
                 <Text style={styles.buttonText}>Register</Text>
@@ -128,7 +117,7 @@ const RegisterScreen = () => {
             )}
   </Formik>
           </View>
-        </View>
+          </KeyboardAwareScrollView>
      );
 }
  

@@ -1,10 +1,28 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet,TouchableOpacity } from "react-native";
+import { auth } from '../firebase';
+import { useNavigation } from '@react-navigation/native';
 
 const MessagesScreen = () => {
+
+    const navigation = useNavigation()
+    const handleSignOut = () => {
+    auth
+    .signOut()
+    .then(() => {
+        navigation.replace("Login")
+    })
+    .catch(error => alert(error.message))
+}
+
     return ( 
         <View style={styles.container}>
             <Text>Dispaly messages here.</Text>
+            <TouchableOpacity
+            style={styles.button}
+             onPress={handleSignOut}>
+                <Text style={styles.buttonText}>Sign Out</Text>
+            </TouchableOpacity>
         </View>
      );
 }

@@ -1,32 +1,26 @@
+import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react/cjs/react.development';
+import Card from '../components/Card';
 import { auth, db, storage } from '../firebase';
 
+
 const ProfileScreen = () => {
+
     const [userDetails, setUserDetails] = useState("");
     db.collection("users").doc(auth.currentUser.uid).get()
-    .then(snapshot => setUserDetails(snapshot.data()));
-
-    const [profilePic, setProfilePic] = useState(null);
-    useEffect(() => {
-        storage
-          .ref('/' + auth.currentUser.uid) //name in storage in firebase console
-          .getDownloadURL()
-          .then((url) => {
-            setProfilePic(url);
-          })
-          .catch((e) => console.log('Errors while downloading => ', e));
-      }, []);
+    .then(snapshot => {
+        setUserDetails(snapshot.data());
+    });
 
     return ( 
         <View style={styles.container}>
-            <Image
-            source={{ uri: profilePic}}
-            style={styles.thumbnail}
-            />
-            <Text>About {userDetails.dogName}:</Text>
-            <Text>{userDetails.about}</Text>
+        <Card
+        key={userDetails.dogName}
+        name={userDetails.dogName}
+        bio={userDetails.about}
+        image={userDetails.pic}/> 
         </View>
      );
 }
