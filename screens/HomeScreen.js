@@ -13,8 +13,13 @@ const HomeScreen = () => {
     useEffect(() => {db
     .collection("users")
     .onSnapshot(snapshot => {
-        setUsers(snapshot.docs.map(doc => doc.data()));
+        setUsers(snapshot.docs.map(doc => doc.data()))
     })}, [])
+
+    // remove current user from users array
+
+    
+
 
           // handle likes and passes
           const [currentIndex, setCurrentIndex] = useState(0);
