@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Text, View, StyleSheet,TouchableOpacity } from "react-native";
 import { auth, db } from '../firebase';
 import { useState, useEffect } from 'react';
+import Contact from '../components/Contact';
 
 
 let userDetails = new Array()
@@ -9,6 +10,8 @@ let userDetails = new Array()
 const MessagesScreen = () => {
    
     const [likedUsers, setLikedUsers] = useState([])
+    const [likedDetails, setLikedDetails] = useState([])
+    const [isBusy, setIsBusy] = useState(true)
 
 // grab the liked users array from database
     useEffect(() => {
@@ -28,15 +31,23 @@ const MessagesScreen = () => {
                 .then(querySnapshot => {
                     querySnapshot.forEach(doc => {
                         userDetails.push(doc.data())
+                         setLikedDetails([...userDetails], querySnapshot)
                     })
-                })
+                }).then(setIsBusy(false))
             })
         })
     }, [])
 
+  console.log(likedDetails)
+  console.log(isBusy)
+
     return ( 
         <View style={styles.container}>
-        <Text>Display likes here</Text>
+         {
+           likedDetails && likedDetails.map((user, i) => 
+                <Text key={i}>{user.city}</Text>
+                )
+         }
         </View>
      );
 }
@@ -47,7 +58,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        fontSize: 18
     },
     button: {
         backgroundColor: "salmon",
