@@ -20,7 +20,6 @@ const HomeScreen = () => {
         const currentUser = auth.currentUser.uid
         const newUsersArr = [...users].filter((user) => {return user.uid !== currentUser})
 
-
           // handle likes and passes
           const [currentIndex, setCurrentIndex] = useState(0);
 
