@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useState, useEffect } from 'react/cjs/react.development';
 import Card from '../components/Card';
 import { auth, db, storage } from '../firebase';
@@ -14,13 +14,30 @@ const ProfileScreen = () => {
         setUserDetails(snapshot.data());
     });
 
+    const navigation = useNavigation()
+    const handleSignOut = () => {
+    auth
+    .signOut()
+    .then(() => {
+        navigation.replace("Login")
+    })
+    .catch(error => alert(error.message))
+}
+
     return ( 
         <View style={styles.container}>
-        <Card
-        key={userDetails.dogName}
-        name={userDetails.dogName}
-        bio={userDetails.about}
-        image={userDetails.pic}/> 
+        <Image source={{uri: userDetails.pic}} style={styles.thumbnail}/>
+        <Text>Hi I'm {userDetails.dogName}!</Text>
+        <Text>I live in {userDetails.city}.</Text>
+        <Text>The person I'm obssesed with is {userDetails.personName}.</Text>
+        <Text>You can contact me here: {auth.currentUser.email}</Text>
+
+        <TouchableOpacity
+            style={styles.button}
+             onPress={handleSignOut}>
+                <Text style={styles.buttonText}>Sign Out</Text>
+            </TouchableOpacity>
+            
         </View>
      );
 }

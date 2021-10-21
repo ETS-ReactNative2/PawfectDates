@@ -17,15 +17,14 @@ const HomeScreen = () => {
     })}, [])
 
     // remove current user from users array
-
-    
-
+        const currentUser = auth.currentUser.uid
+        const newUsersArr = [...users].filter((user) => {return user.uid !== currentUser})
 
           // handle likes and passes
           const [currentIndex, setCurrentIndex] = useState(0);
 
           const handleLike = () => {
-            likes.push(users[currentIndex].uid)
+            likes.push(newUsersArr[currentIndex].uid)
             db.collection("users").doc(auth.currentUser.uid).update({
                 "likes": likes
             })
@@ -36,15 +35,15 @@ const HomeScreen = () => {
           }
     
         const nextUser = () => {
-          const nextIndex = users.length - 2 === currentIndex ? 0 : currentIndex + 1
+          const nextIndex = newUsersArr.length - 2 === currentIndex ? 0 : currentIndex + 1
           setCurrentIndex(nextIndex)
        }
 
     return (
  
         <View style={styles.container}>
-        {users.length > 1 &&
-            users.map(
+        {newUsersArr.length > 1 &&
+            newUsersArr.map(
                 (user, i) => 
                 currentIndex === i && (
             <Card
