@@ -34,9 +34,9 @@ const NavTabs = () => {
       tabBarActiveTintColor: "salmon",
       tabBarInactiveTintColor: "gray"
     })}>
-        <Tab.Screen name="Swipe" component={HomeScreen} options={{ headerShown: false }} />
-        <Tab.Screen name="Messages" component={MessagesScreen} options={{ headerShown: false }} />
-        <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+        <Tab.Screen name="Swipe" component={HomeScreen} options={{ headerShown: false, tabBarLabel: ""}} />
+        <Tab.Screen name="Messages" component={MessagesScreen} options={{ headerShown: false, tabBarLabel: ""}} />
+        <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false, tabBarLabel: ""}} />
       </Tab.Navigator>
   )
 }

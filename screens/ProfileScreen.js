@@ -1,9 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { useState, useEffect } from 'react/cjs/react.development';
-import Card from '../components/Card';
-import { auth, db, storage } from '../firebase';
+import { useState } from 'react/cjs/react.development';
+import { auth, db } from '../firebase';
 
 
 const ProfileScreen = () => {

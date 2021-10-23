@@ -23,10 +23,7 @@ const LoginScreen = () => {
     const handleLogIn = () => {
         auth
         .signInWithEmailAndPassword(email, password)
-        // .then(userCredential => {
-        //     const user = userCredential.user;
-        // })
-        // .catch(error => alert(error.message))
+        .catch(error => alert(error.message))
     }
 
     return (
