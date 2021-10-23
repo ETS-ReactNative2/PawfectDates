@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Text, View, StyleSheet,TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet,TouchableOpacity, FlatList, Image, Dimensions } from "react-native";
 import { auth, db } from '../firebase';
 import { useState, useEffect } from 'react';
 import Contact from '../components/Contact';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 let userDetails = new Array()
@@ -15,7 +16,7 @@ const MessagesScreen = () => {
 
 // grab the liked users array from database
     useEffect(() => {
-        db.collection("users").doc(auth.currentUser.uid)
+         db.collection("users").doc(auth.currentUser.uid)
         .get()
         .then(doc => {
             if (doc.exists) {
@@ -28,38 +29,50 @@ const MessagesScreen = () => {
             details.map(id => {
                 db.collection("users").where("uid", "==", id)
                 .get()
-                .then(querySnapshot => {
+                .then( querySnapshot => {
                     querySnapshot.forEach(doc => {
                         userDetails.push(doc.data())
                          setLikedDetails([...userDetails], querySnapshot)
                     })
-                }).then(setIsBusy(false))
+                })
             })
         })
     }, [])
 
-  console.log(likedDetails)
-  console.log(isBusy)
-
-    return ( 
-        <View style={styles.container}>
-         {
-           likedDetails && likedDetails.map((user, i) => 
-                <Text key={i}>{user.city}</Text>
-                )
-         }
+    return (
+        <SafeAreaView style={styles.container}>
+        <View style={{alignContent: "center"}}>
+        <Image source={require("../assets/messages.png")} style={styles.image} />
         </View>
+        <FlatList 
+            keyExtractor={(item) => item.uid}
+            data={likedDetails}
+            renderItem={({ item }) => (
+                <Contact
+                 image={item.pic}
+                 dog={item.dogName}
+                 person={item.personName}
+                 city={item.city}
+                 />
+            )}
+        />
+        </SafeAreaView>
+        
      );
 }
  
 export default MessagesScreen;
 
 const styles = StyleSheet.create({
+    text: {
+        fontSize: 24,
+        textAlign: "center",
+        marginBottom: 25
+    },
     container: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center",
-        fontSize: 18
+        alignItems: "flex-start",
     },
     button: {
         backgroundColor: "salmon",
@@ -73,5 +86,10 @@ const styles = StyleSheet.create({
         color: "white",
         fontWeight: "700",
         fontSize: 16
+    },
+    image: {
+        width: Dimensions.get("screen").width,
+        resizeMode: "contain",
+        borderRadius: 40
     },
 })

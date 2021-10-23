@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, TextInput, View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { Text, TextInput, View, StyleSheet, TouchableOpacity } from "react-native";
 import {auth, db, storage} from '../firebase'
 import { useState } from "react";
 import { Formik } from "formik";
