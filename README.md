@@ -10,7 +10,7 @@ So, you just got your first puppy and you can’t wait to introduce them to the 
 
 For this project I worked with React Native and Firebase. React Native felt like the natural choice to make a fully responsive and user friendly mobile app. For my database and authentication I went with Google Firebase.  I chose this technology because of its noSQL structure that provides fast querying and allows for frequent application changes.  I used Firestore as my main database for storing user profile information and potential matches, and Storage for user profile pictures. 
 
-<img src="./assets/matches.png" alt="Pawfect Matches Screen" width="50%" height="50%"/>
+[![Pawfect Dates Demo](https://youtu.be/8ozN1NMcCPQ)](https://youtu.be/8ozN1NMcCPQ)
 
 ### In the future..
 This project was built, solo, in a little over two weeks’ time. With that in mind, I was not able to implement every aspect and functionality that I would have liked to. If I had more time, or perhaps if I pick this up again in the future a few things I would love to add would be:
